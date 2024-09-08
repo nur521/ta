@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web App</title>
+    <style>
+        .su{
+            margin-left: -60%;
+            margin-top: 20%;
+        }
+        .te{
+            margin-top: -50%;
+            margin-left: 40%;
+        }
+        .e{
+            background-color: gray;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 10px;
+            max-width: 235px;
+            text-align: center;
+            margin-left: 40%;
+            margin-top: -6%;
+        }
+        .r{
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            margin-top: -6%;
+        }
+        .d{
+            background-color: orange;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 10px;
+            max-width: 120px;
+            text-align: center;
+            margin-left: 30%;
+            margin-top: 0;
+        }
+        .token{
+            margin-left: 51%;
+            margin-top: -2.5%;
+        }
+        body{
+            background-size: cover;
+        }
+        button{
+            margin-left: 47%;
+        }
+    </style>
+    <script>
+        // Функция для извлечения параметров из URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            let results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Функция для отображения данных пользователя на странице
+        function displayUserInfo() {
+            const username = getParameterByName('username') || "Гость";
+            const userId = getParameterByName('user_id') || "Неизвестно";
+            const balance = getParameterByName('balance') || "0";
+            const remainingTokens = getParameterByName('remaining_tokens') || "Неизвестно";
+            const referrals = getParameterByName('referrals') || "0";
+
+            document.getElementById('username').textContent = username;
+            document.getElementById('user_id').textContent = userId;
+            document.getElementById('balance').textContent = balance;
+            document.getElementById('remaining_tokens').textContent = remainingTokens;
+            document.getElementById('referrals').textContent = referrals;
+
+            // Показать реферальную ссылку как активную ссылку
+            const referralLink = `https://t.me/Practice_app_bot?start=${userId}`;
+            document.getElementById('referral_link').textContent = referralLink;
+            document.getElementById('referral_link').href = referralLink;
+        }
+
+        // Выполняем функцию при загрузке страницы
+        window.onload = displayUserInfo;
+
+        // Функция для показа списка рефералов
+        function showReferralList() {
+            const referrals = getParameterByName('referrals') || "0";
+            const referralList = referrals > 0 ? `You have ${referrals} referrals.` : "You have no referrals.";
+            document.getElementById('referral_list').textContent = referralList;
+        }
+    </script>
+</head>
+<body bgcolor="black">
+    <div class="d"><font color="lime"><p align="center">Your Telegram ID: <span id="user_id">Неизвестно</span></p></font></div>
+    <!--<img width="500" height="250" class="r" src="C:\Users\Ulmeken\.vscode\cli\practice\Camera Roll\photo_6235580876822003100_y.jpg" alt="">-->
+    <div class="e"><img class="su" src="https://kcu.ru/upload/medialibrary/7ce/pb8ja0gjxf1rw8jy8d9a73p63gr49qab.png" alt="" width="80px" height="80px">
+       <div class="te"> <font color="white"><p align="center">Your total balance: </p></font>
+    <h1 align="center" text="white"><font color="lime"><p><span id="balance">0</span> MineCoins</p></font></h1></div></div>
+    <h1 align="center"><font color="white">Hello, <span id="username">Гость</span>!</font></h1>
+    
+    
+   <b> <font color="white"> <p align="center">Total remaining tokens:</p></font></b>
+    <h1 align="center"><font color="red" > <span id="remaining_tokens">Неизвестно</span> MineCoins</p></font></h1>
+
+   <!-- <font color="white"> <h3>Referrals</h3></font>-->
+    <!--<font color="white">  <p>Referrals count: <span id="referrals">0</span></p></font>-->
+
+    <button onclick="showReferralList()"><h5>Referral List</h5></button>
+    <font color="white"> <h2 id="referral_list" align="center"></h2></font>
+    
+
+    <font color="white"> <h3 align="center">Your Referral Link</h3></font>
+    <p align="center"><a id="referral_link" href="#" style="color: blue; text-decoration: underline;">Click to copy</a></p>
+    <br>
+    <font color="white">  <a href="wallet.html?username={call.from_user.username}&user_id={user_id}&balance={user_tokens + 5000}&remaining_tokens={remaining_tokens}&referrals={referral_count}">Перейти к вводу Ton-кошелька</a></font>
+
+</body>
+</html>
